@@ -30,7 +30,7 @@ def extract_markdown_links(text):
     return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
 
 
-def split_nodes_image(old_nodes: list[TextNode]):
+def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
 
     result = []
 
@@ -49,18 +49,18 @@ def split_nodes_image(old_nodes: list[TextNode]):
             if len(new) != 2:
                 raise ValueError("invalid markdown image section is not closed")
             if new[0] != "":
-                result.append(markup_text_to_textnode(new[0]))
+                result.append(markdown_text_to_textnode(new[0]))
             
-            result.append(markup_image_to_textnode(image))
+            result.append(markdown_image_to_textnode(image))
             text = "".join(new[1])
 
         if text != "":
-            result.append(markup_text_to_textnode(text))
+            result.append(markdown_text_to_textnode(text))
     
 
     return result
 
-def split_nodes_link(old_nodes: list[TextNode]):
+def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
 
     result = []
 
@@ -79,25 +79,25 @@ def split_nodes_link(old_nodes: list[TextNode]):
             if len(new) != 2:
                 raise ValueError("invalid markdown, link section is not closed")
             if new[0] != "":
-                result.append(markup_text_to_textnode(new[0]))
+                result.append(markdown_text_to_textnode(new[0]))
             
-            result.append(markup_link_to_textnode(link))
+            result.append(markdown_link_to_textnode(link))
             text = "".join(new[1])
 
         if text != "":
-            result.append(markup_text_to_textnode(text))
+            result.append(markdown_text_to_textnode(text))
     
 
     return result
 
 
-def markup_text_to_textnode(text):
+def markdown_text_to_textnode(text):
     return TextNode(text, TextType.TEXT)
 
-def markup_image_to_textnode(image):
+def markdown_image_to_textnode(image):
         return TextNode(image[0], TextType.IMAGE, image[1])
 
-def markup_link_to_textnode(link):
+def markdown_link_to_textnode(link):
     return TextNode(link[0], TextType.LINK, link[1])
 
 
