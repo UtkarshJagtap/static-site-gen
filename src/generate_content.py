@@ -58,11 +58,11 @@ def generate_page(from_path, template_path, dest_path, base_path):
 
     tempelate = tempelate.replace(f'href="/', f'href="{base_path}')
 
-    finalhtml = tempelate.replace(f'src="/', f'src="{base_path}')
+    tempelate = tempelate.replace(f'src="/', f'src="{base_path}')
 
     with open(dest_path, "w") as f:
         print(f"writing html to  {dest_path}")
-        f.write(finalhtml)
+        f.write(tempelate)
 
 def generate_pages_recursive(dir_path_content, tempelate_path, dest_dir_path, base_path):
     if not os.path.lexists(dest_dir_path):
